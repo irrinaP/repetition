@@ -1,0 +1,45 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Введите размеры куба
+        Console.Write("Введите длину ребра куба (a): ");
+        double a = Convert.ToDouble(Console.ReadLine());
+
+        // Введите радиус шара
+        Console.Write("Введите радиус шара (R <= a/2): ");
+        double R = Convert.ToDouble(Console.ReadLine());
+
+        // Проверка условия R <= a/2
+        if (R > a / 2)
+        {
+            Console.WriteLine("Ошибка: Радиус шара не может превышать половину длины ребра куба.");
+
+            while ((Console.ReadLine() != "quit")){
+                Console.ReadLine();
+            }
+
+        }
+
+        else
+        {
+            // Вычислить объемы куба и шара
+            double cubeVolume = Math.Pow(a, 3);
+            double sphereVolume = (4.0 / 3.0) * Math.PI * Math.Pow(R, 3);
+
+            // Вычислить процент материала, ушедшего в отходы
+            double wastePercentage = ((cubeVolume - sphereVolume) / cubeVolume) * 100.0;
+
+            // Вывести результаты
+            Console.WriteLine($"Объем куба: {cubeVolume}");
+            Console.WriteLine($"Объем шара: {sphereVolume}");
+            Console.WriteLine($"Процент отходов: {wastePercentage}%");
+
+            while ((Console.ReadLine() != "quit")) {
+                Console.ReadLine();
+            }
+        }
+    }
+}
