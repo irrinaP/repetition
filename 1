@@ -4,42 +4,48 @@ class Program
 {
     static void Main()
     {
+        double a, R;
+
         // Введите размеры куба
-        Console.Write("Введите длину ребра куба (a): ");
-        double a = Convert.ToDouble(Console.ReadLine());
+        while (true)
+        {
+            Console.Write("Введите длину ребра куба (a): ");
+            if (double.TryParse(Console.ReadLine(), out a) && a > 0)
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: Введите положительное число для размера куба.");
 
+            }
+        }
         // Введите радиус шара
-        Console.Write("Введите радиус шара (R <= a/2): ");
-        double R = Convert.ToDouble(Console.ReadLine());
-
-        // Проверка условия R <= a/2
-        if (R > a / 2)
+        while (true)
         {
-            Console.WriteLine("Ошибка: Радиус шара не может превышать половину длины ребра куба.");
-
-            while ((Console.ReadLine() != "quit")){
-                Console.ReadLine();
+            Console.Write("Введите радиус шара (R <= a/2): ");
+            if (double.TryParse(Console.ReadLine(), out R) && R >= 0 && R <= a / 2)
+            {
+                break;
             }
+            else
+            {
+                Console.WriteLine("Ошибка: Введите неотрицательное число для радиуса шара (R <= a/2).");
 
-        }
-
-        else
-        {
-            // Вычислить объемы куба и шара
-            double cubeVolume = Math.Pow(a, 3);
-            double sphereVolume = (4.0 / 3.0) * Math.PI * Math.Pow(R, 3);
-
-            // Вычислить процент материала, ушедшего в отходы
-            double wastePercentage = ((cubeVolume - sphereVolume) / cubeVolume) * 100.0;
-
-            // Вывести результаты
-            Console.WriteLine($"Объем куба: {cubeVolume}");
-            Console.WriteLine($"Объем шара: {sphereVolume}");
-            Console.WriteLine($"Процент отходов: {wastePercentage}%");
-
-            while ((Console.ReadLine() != "quit")) {
-                Console.ReadLine();
             }
         }
+        // Вычислить объемы куба и шара
+        double cubeVolume = Math.Pow(a, 3);
+        double sphereVolume = (4.0 / 3.0) * Math.PI * Math.Pow(R, 3);
+
+        // Вычислить процент материала, ушедшего в отходы
+        double wastePercentage = ((cubeVolume - sphereVolume) / cubeVolume) * 100.0;
+
+        // Вывести результаты
+        Console.WriteLine($"Объем куба: {cubeVolume}");
+        Console.WriteLine($"Объем шара: {sphereVolume}");
+        Console.WriteLine($"Процент отходов: {wastePercentage}%");
+
+        Console.ReadLine();
     }
 }
