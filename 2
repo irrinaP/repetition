@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text.Json;
 
 class Student
@@ -17,7 +21,6 @@ class Program
             new Student { FirstName = "Иван", LastName = "Иванов", Group = "Группа1", Grade = 4 },
             new Student { FirstName = "Петр", LastName = "Петров", Group = "Группа2", Grade = 5 },
             new Student { FirstName = "Сидор", LastName = "Сидоров", Group = "Группа1", Grade = 3 },
-            
         };
 
         // Сохраняем данные в JSON-файл
@@ -28,17 +31,31 @@ class Program
         string jsonText = File.ReadAllText("students.json");
         List<Student> loadedStudents = JsonSerializer.Deserialize<List<Student>>(jsonText);
 
-        // Задаем группу и оценку для поиска
-        string targetGroup = "Группа1";
-        int targetGrade = 4;
+        Console.Write("Введите группу для поиска: ");
+        string targetGroup = Console.ReadLine();
 
-        // Выполняем поиск и выводим результат
-        var result = loadedStudents.Where(s => s.Group == targetGroup && s.Grade == targetGrade).ToList();
-
-        Console.WriteLine("Студенты из группы {0} с оценкой {1}:", targetGroup, targetGrade);
-        foreach (var student in result)
+        Console.Write("Введите оценку для поиска: ");
+        if (int.TryParse(Console.ReadLine(), out int targetGrade))
         {
-            Console.WriteLine("{0} {1}", student.FirstName, student.LastName);
+            // Выполняем поиск и выводим результат
+            var result = loadedStudents.Where(s => s.Group == targetGroup && s.Grade == targetGrade).ToList();
+
+            if (result.Count > 0)
+            {
+                Console.WriteLine("Студенты из группы {0} с оценкой {1}:", targetGroup, targetGrade);
+                foreach (var student in result)
+                {
+                    Console.WriteLine("{0} {1}", student.FirstName, student.LastName);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Нет студентов из группы {0} с оценкой {1}.", targetGroup, targetGrade);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Некорректные данные.");
         }
         while ((Console.ReadLine() != "quit"))
         {
@@ -47,5 +64,3 @@ class Program
 
     }
 }
-
-
